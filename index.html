@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>HTML5 Platformer</title>
+
         <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
     </head>
     <body>
@@ -31,9 +32,17 @@
 
         function create () {
 
+
             game.physics.startSystem(Phaser.Physics.ARCADE); 
+
+
+            //adding background
+            game.add.sprite(0, 0, 'bg');
+            game.add.group();
+
             game.add.sprite(0, 0, 'bg');
             platforms = game.add.group();
+
             platforms.enableBody = true;
             var ground = platforms.create(0, game.world.height - 64, 'platform');
             ground.scale.setTo(2, 2);
@@ -42,6 +51,12 @@
             ledge.body.immovable = true;
             ledge = platforms.create(-150, 250, 'platform');
             ledge.body.immovable = true;
+
+
+            //creating group and applying physics to it
+            platforms = game.add.group();
+            platforms.enableBody = true;
+
 
         }
 
