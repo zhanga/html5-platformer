@@ -25,8 +25,8 @@
             game.load.image('platform', 'assets/platform.png');
             game.load.image('goal', 'assets/star.png');
             game.load.image('dia1', 'assets/diamond.png');
-            game.load.image('player1', 'assets/dude.png', 32, 48);
-            game.load.image('bad1', 'assets/baddie.png', 32, 48);
+            game.load.spritesheet('player1', 'assets/dude.png', 32, 48);
+            game.load.spritesheet('bad1', 'assets/baddie.png', 32, 48);
 
         }
 
@@ -40,7 +40,6 @@
             game.add.sprite(0, 0, 'bg');
             game.add.group();
 
-            game.add.sprite(0, 0, 'bg');
             platforms = game.add.group();
 
             platforms.enableBody = true;
@@ -53,8 +52,30 @@
             ledge.body.immovable = true;
 
             //adding player and applinyg gravity to him
-            player = game.add.sprite(32, gameworld.height - 150, 'player1');
+            player = game.add.sprite(32, game.world.height - 150, 'player1');
             game.physics.arcade.enable(player);
+
+            //physics properties
+            player.body.bounce.y = 0.2;
+            player.body.gravity.y = 300;
+            player.body.collideWorldBounds = true;
+
+            //player animation
+            player.animations.add('left', [0, 1, 2, 3], 10, true);
+            player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+            // //adding enemy and applinyg gravity to him
+            // enemy = game.add.sprite(32, game.world.height - 150, 'bad1');
+            // game.physics.arcade.enable(enemy);
+
+            // //physics properties
+            // enemy.body.bounce.y = 0.2;
+            // enemy.body.gravity.y = 300;
+            // enemy.body.collideWorldBounds = true;
+
+            // //enemy animation
+            // enemy.animations.add('left', [0, 1], 4, true);
+            // enemy.animations.add('right', [2, 3], 4, true);
 
         }
 
