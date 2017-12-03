@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>hello phaser!</title>
+        <title>HTML5 Platformer</title>
         <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
     </head>
     <body>
@@ -31,7 +31,6 @@
 
         function create () {
 
-            logo.anchor.setTo(0.5, 0.5);
             game.physics.startSystem(Phaser.Physics.ARCADE); 
             game.add.sprite(0, 0, 'bg');
             platforms = game.add.group();
