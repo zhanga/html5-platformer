@@ -40,23 +40,31 @@
             logo.anchor.setTo(0.5, 0.5);
 >>>>>>> refs/remotes/zhanga/master
             game.physics.startSystem(Phaser.Physics.ARCADE); 
+<<<<<<< HEAD
 
             //adding background
             game.add.sprite(0, 0, 'sky');
             game.add.group();
+=======
+            game.add.sprite(0, 0, 'bg');
+            platforms = game.add.group();
+>>>>>>> refs/remotes/zhanga/master
             platforms.enableBody = true;
-            var ground = platforms.create(0, game.world.height - 64, 'ground');
+            var ground = platforms.create(0, game.world.height - 64, 'platform');
             ground.scale.setTo(2, 2);
             ground.body.immovable = true;
-            var ledge = platforms.create(400, 400, 'ground');
+            var ledge = platforms.create(400, 400, 'platform');
             ledge.body.immovable = true;
-            ledge = platforms.create(-150, 250, 'ground');
+            ledge = platforms.create(-150, 250, 'platform');
             ledge.body.immovable = true;
 
+<<<<<<< HEAD
             //creating group and applying physics to it
             platforms = game.add.group();
             platforms.enableBody = true;
 
+=======
+>>>>>>> refs/remotes/zhanga/master
         }
 
         function update(){
