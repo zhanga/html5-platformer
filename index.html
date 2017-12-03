@@ -52,11 +52,9 @@
             ledge = platforms.create(-150, 250, 'platform');
             ledge.body.immovable = true;
 
-
-            //creating group and applying physics to it
-            platforms = game.add.group();
-            platforms.enableBody = true;
-
+            //adding player and applinyg gravity to him
+            player = game.add.sprite(32, gameworld.height - 150, 'player1');
+            game.physics.arcade.enable(player);
 
         }
 
