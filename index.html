@@ -36,6 +36,16 @@
             ledge.body.immovable = true;
             ledge = platforms.create(-150, 250, 'platform');
             ledge.body.immovable = true;
+            
+            //adding object to collect
+                stars = game.add.group();
+                stars.enableBody = true;
+                
+                //spawning the star
+                for (var i = 0; i<5; i++){
+                   var star = stars.create(i * 150, 0, 'goal');
+                }
+            
             //adding player and applying gravity to him
             player = game.add.sprite(500, game.world.height - 900, 'player1');
             enemy = game.add.sprite(32, game.world.height - 500, 'bad1');
