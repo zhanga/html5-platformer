@@ -76,7 +76,8 @@
         }
 
         function update(){
-
+            var hitPlatform = game.physics.arcade.collide(player, platforms);
+            var hitPlatform = game.physics.arcade.collide(enemy, platforms);
         }
 
     };
