@@ -83,6 +83,7 @@
             function update() {
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
                 var hitPlatform = game.physics.arcade.collide(enemy, platforms);
+                player.body.velocity.x = 0;
 
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -200;
