@@ -101,6 +101,14 @@
                 if (w.isDown) {
                     enemy.body.velocity.y = -175;
                 }
+                
+                //what happens when player touches the enemy
+                game.physics.arcade.overlap(player, enemy, killPLayer, null, this);
+                
+                //player dies by dissapearing
+                function killPlayer(player, enemy){
+                 player.kill();   
+                }
             }
         }
     </script>
