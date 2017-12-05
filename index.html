@@ -87,7 +87,6 @@
 
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -200;
-
                     player.animations.play('left');
                 }
 
@@ -98,9 +97,8 @@
                     }
 
                     else {
-                        player.animations.stop();
+                        player.frame = 4;
                     }
-                    player.frame = 4;
                 }
 
                 if (cursors.up.isDown) {
