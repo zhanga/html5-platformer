@@ -70,6 +70,18 @@
             a = game.input.keyboard.addKey(Phaser.Keyboard.A);
             s = game.input.keyboard.addKey(Phaser.Keyboard.S);
             d = game.input.keyboard.addKey(Phaser.Keyboard.D);
+            
+            /adding score text at the top for player 1 and 2
+            var scoreP1 = 0;
+            var scoreP2 = 0;
+            
+            var scoreTextP1;
+            var scoreTextP2;
+            
+            scoreTextP1 = game.add.text (20, 20, 'score: 0', { fontSize :'32px', fill: '#000' });
+            scoreTextP2 = game.add.text (780, 20, 'score: 0', { fontSize :'32px', fill: '#000' });
+            
+            
         }
         function update() {
             var hitPlatform = game.physics.arcade.collide(player, platforms);
