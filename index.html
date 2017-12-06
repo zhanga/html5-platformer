@@ -22,6 +22,14 @@
             game.load.spritesheet('player1', 'assets/dude.png', 32, 48);
             game.load.spritesheet('bad1', 'assets/baddie.png', 32, 32);
         }
+        
+            
+            var scoreTextP1;
+            var scoreTextP2;
+                    
+            var scoreP1 = 0;
+            var scoreP2 = 0;
+        
         function create() {
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //adding background
@@ -72,11 +80,6 @@
             d = game.input.keyboard.addKey(Phaser.Keyboard.D);
             
             //adding score text at the top for player 1 and 2
-            var scoreP1 = 0;
-            var scoreP2 = 0;
-            
-            var scoreTextP1;
-            var scoreTextP2;
             
             scoreTextP1 = game.add.text (20, 20, 'score: 0', { fontSize :'25px', fill: '#000' });
             scoreTextP2 = game.add.text (680, 20, 'score: 0', { fontSize :'25px', fill: '#000' });
@@ -132,8 +135,13 @@
             //what happens when the player collects a star
             game.physics.arcade.overlap(player, stars, collect, null, this);
             
+
+            
             function collect(player, stars){
                 stars.kill();
+                
+                scoreP1 +=5;
+                scoreTextP1.text = 'Score: ' + scoreP1;
             }
         }
     }
