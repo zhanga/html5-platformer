@@ -133,18 +133,18 @@
 //                 player.kill();
 //             }
             //what happens when the player collects a star
-            game.physics.arcade.overlap(player, stars, collect, null, this);
+            game.physics.arcade.overlap(player, stars, collectP1, null, this);
             
-            game.physics.arcade.overlap(enemy, stars, collect, null, this);
+            game.physics.arcade.overlap(enemy, stars, collectP2, null, this);
 
             
-            function collect(player, stars){
+            function collectP1(player, stars){
                 stars.kill();
                 
                 scoreP1 +=5;
                 scoreTextP1.text = 'Score: ' + scoreP1;
             }
-            function collect(enemy, stars){
+            function collectP2(enemy, stars){
                 stars.kill();
                 
                 scoreP2 +=5;
