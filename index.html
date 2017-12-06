@@ -22,6 +22,14 @@
             game.load.spritesheet('player1', 'assets/dude.png', 32, 48);
             game.load.spritesheet('bad1', 'assets/baddie.png', 32, 32);
         }
+        
+            
+            var scoreTextP1;
+            var scoreTextP2;
+                    
+            var scoreP1 = 0;
+            var scoreP2 = 0;
+        
         function create() {
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //adding background
@@ -43,7 +51,7 @@
                 
                 //spawning the star
                 for (var i = 0; i<5; i++){
-                   var star = stars.create(i * 150, 0, 'goal');
+                   var star = stars.create(i * 150, 300, 'goal');
                 }
             
             //adding player and applying gravity to him
@@ -62,14 +70,21 @@
             player.animations.add('left', [0, 1, 2, 3], 10, true);
             player.animations.add('right', [5, 6, 7, 8], 10, true);
             //enemy animation
-            enemy.animations.add('left', [0, 1], 3, true);
-            enemy.animations.add('right', [2, 3], 3, true);
+            enemy.animations.add('left', [0, 1], 10, true);
+            enemy.animations.add('right', [2, 3], 10, true);
             //adding keyboard as input
             cursors = game.input.keyboard.createCursorKeys();
             w = game.input.keyboard.addKey(Phaser.Keyboard.W);
             a = game.input.keyboard.addKey(Phaser.Keyboard.A);
             s = game.input.keyboard.addKey(Phaser.Keyboard.S);
             d = game.input.keyboard.addKey(Phaser.Keyboard.D);
+            
+            //adding score text at the top for player 1 and 2
+            
+            scoreTextP1 = game.add.text (20, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
+            scoreTextP2 = game.add.text (680, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
+            
+            
         }
         function update() {
             var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -112,17 +127,30 @@
                 enemy.body.velocity.y = -175;
             }
 //what happens when the enemy touches the player
-            game.physics.arcade.overlap(player, enemy, killplayer, null, this);
+//            game.physics.arcade.overlap(player, enemy, killplayer, null, this);
 
-            function killplayer(player, enemy) {
-                player.kill();
-            }
+//             function killplayer(player, enemy) {
+//                 player.kill();
+//             }
             //what happens when the player collects a star
-            game.physics.arcade.overlap(player, stars, collect, null, this);
+            game.physics.arcade.overlap(player, stars, collectP1, null, this);
             
-            function collect(player, stars){
+            game.physics.arcade.overlap(enemy, stars, collectP2, null, this);
+
+            
+            function collectP1(player, stars){
                 stars.kill();
+                
+                scoreP1 +=5;
+                scoreTextP1.text = 'Score: ' + scoreP1;
             }
+            function collectP2(enemy, stars){
+                stars.kill();
+                
+                scoreP2 +=5;
+                scoreTextP2.text = 'Score: ' + scoreP2;
+            }
+            
         }
     }
 </script>
