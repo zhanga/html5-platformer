@@ -51,7 +51,7 @@
                 
                 //spawning the star
                 for (var i = 0; i<5; i++){
-                   var star = stars.create(i * 150, 300, 'goal');
+                   var star = stars.create(i * 150 + 200, 300, 'goal');
                 }
             
             //adding player and applying gravity to him
@@ -82,7 +82,7 @@
             //adding score text at the top for player 1 and 2
             
             scoreTextP1 = game.add.text (20, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
-            scoreTextP2 = game.add.text (680, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
+            scoreTextP2 = game.add.text (660, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
             
             
         }
