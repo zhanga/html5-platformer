@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <title>HTML5 Platformer</title>
 
-    <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
+    <script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.min.js"></script>
 </head>
 <body>
     <script type="text/javascript">
         window.onload = function () {
-            var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
 
             function preload() {
                 game.load.image('platform', 'assets/platform.png');
@@ -73,11 +73,10 @@
                 // Adding the stars to collect.
                 stars = game.add.group();
                 stars.enableBody = true;
+                stars.physicsBodyType = Phaser.Physics.ARCADE;
 
-                // Spawning the star.
-                for (var i = 0; i < 5; i++) {
-                    var star = stars.create(i * 150 + 100, 300, 'goal');
-                }
+                //spawning the stars
+                game.time.events.loop(1000, spawnStar, this);
 
                 // Adding players.
                 player = game.add.sprite(50, game.world.height - 900, 'player1');
@@ -97,7 +96,7 @@
                 player.animations.add('right', [3, 4, 5], 9, true);
                 player.animations.add('standLeft', [2], 1, true);
                 player.animations.add('standRight', [3], 1, true);
-                
+
                 player2.animations.add('left', [2, 0, 1], 9, true);
                 player2.animations.add('right', [3, 4, 5], 9, true);
                 player2.animations.add('standLeft', [2], 1, true);
@@ -112,9 +111,9 @@
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
                 // Adding text to place on top of screen.
-                scoreTextP1 = game.add.text(20, 20, 'Score: 0', { fontSize: '25px', fill: '#FFF' });
-                scoreTextP2 = game.add.text(660, 20, 'Score: 0', { fontSize: '25px', fill: '#FFF' });
-                timerText = game.add.text(380, 20, timer.duration.toFixed(0) / 1000, { fontSize: '25px', fill: '#FFF' });
+                scoreTextP1 = game.add.text(20, 20, 'Score: 0', {fontSize: '25px', fill: '#FFF'});
+                scoreTextP2 = game.add.text(660, 20, 'Score: 0', {fontSize: '25px', fill: '#FFF'});
+                timerText = game.add.text(380, 20, timer.duration.toFixed(0) / 1000, {fontSize: '25px', fill: '#FFF'});
 
                 // Emitter values for the snowflakes.
                 back_emitter = game.add.emitter(game.world.centerX, -32, 600);
@@ -133,6 +132,8 @@
             function update() {
                 var hitPlatformP1 = game.physics.arcade.collide(player, platforms);
                 var hitPlatformP2 = game.physics.arcade.collide(player2, platforms);
+                game.physics.arcade.collide(stars, platforms);
+
                 player.body.velocity.x = 0;
                 player2.body.velocity.x = 0;
                 bg.animations.play('twinkle');
@@ -192,7 +193,7 @@
 
                 // To introduce a restart condition when a player wins or loses.
                 else {
-                    endGameText = game.add.text(275, 325, 'Press space to restart!', { fontSize: '25px', fill: '#FFF' });
+                    endGameText = game.add.text(275, 325, 'Press space to restart!', {fontSize: '25px', fill: '#FFF'});
                     if (spacebar.isDown) {
                         scoreP1 = 0;
                         scoreP2 = 0;
@@ -213,6 +214,7 @@
                     scoreP1 += 5;
                     scoreTextP1.text = 'Score: ' + scoreP1;
                 }
+
                 function collectP2(player2, stars) {
                     stars.kill();
 
@@ -243,6 +245,16 @@
                 timer.stop();
             } // end of timeChecker() function.
         }
-    </script>
+
+    function spawnStar(){
+        star = stars.create(getRandomBetween(10, 790), -20, 'goal');
+        star.body.gravity.y = 100;
+        star.body.bounce.y = 0.2
+    }
+
+    function getRandomBetween(min, max){
+        return Math.random() * (max - min) + min;
+    }
+</script>
 </body>
 </html>
