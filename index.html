@@ -40,7 +40,7 @@
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //adding background
             bg = game.add.sprite(0, 0, 'bg');
-            bg.animations.add('twinkle', [0, 1, 2, 3, 4], 10, true);
+            bg.animations.add('twinkle', [0, 1, 2, 3, 4], 8, true);
 
             platforms = game.add.group();
             platforms.enableBody = true;
@@ -106,8 +106,8 @@
             
             //adding score text at the top for player 1 and 2
             
-            scoreTextP1 = game.add.text (20, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
-            scoreTextP2 = game.add.text(660, 20, 'Score: 0', { fontSize: '25px', fill: '#000' });
+            scoreTextP1 = game.add.text (20, 20, 'Score: 0', { fontSize :'25px', fill: '#FFF' });
+            scoreTextP2 = game.add.text(660, 20, 'Score: 0', { fontSize: '25px', fill: '#FFF' });
             
         }
         function update() {
