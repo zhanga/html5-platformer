@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -41,6 +41,8 @@
             var timer;
             var timerText = 0;
             var timerInSeconds = 0;
+
+            var endGameText;
 
             function create() {
                 game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -115,7 +117,7 @@
                 a = game.input.keyboard.addKey(Phaser.Keyboard.A);
                 s = game.input.keyboard.addKey(Phaser.Keyboard.S);
                 d = game.input.keyboard.addKey(Phaser.Keyboard.D);
-
+                spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
                 //adding score text at the top for player 1 and 2
 
                 scoreTextP1 = game.add.text(20, 20, 'Score: 0', { fontSize: '25px', fill: '#FFF' });
@@ -140,62 +142,70 @@
             function update() {
                 var hitPlatformP1 = game.physics.arcade.collide(player, platforms);
                 var hitPlatformP2 = game.physics.arcade.collide(player2, platforms);
-                //var hitPlatform = game.physics.arcade.collide(enemy, platforms);
                 player.body.velocity.x = 0;
                 player2.body.velocity.x = 0;
-                //enemy.body.velocity.x = 0;
                 bg.animations.play('twinkle');
 
                 //player input
-                if (a.isDown) {
-                    player.body.velocity.x = -200;
-                    player.animations.play('left');
-                    isP1LookingLeft = 1;
-                }
-                else {
-                    if (d.isDown) {
-                        player.body.velocity.x = 200;
-                        player.animations.play('right');
-                        isP1LookingLeft = 0;
+                if (player.alive && player2.alive) {
+                    if (a.isDown) {
+                        player.body.velocity.x = -200;
+                        player.animations.play('left');
+                        isP1LookingLeft = 1;
                     }
                     else {
-                        if (isP1LookingLeft == 1) {
-                            player.animations.play('standLeft');
+                        if (d.isDown) {
+                            player.body.velocity.x = 200;
+                            player.animations.play('right');
+                            isP1LookingLeft = 0;
                         }
                         else {
-                            player.animations.play('standRight');
+                            if (isP1LookingLeft == 1) {
+                                player.animations.play('standLeft');
+                            }
+                            else {
+                                player.animations.play('standRight');
+                            }
                         }
                     }
-                }
-                if (w.isDown && player.body.touching.down && hitPlatformP1) {
-                    player.body.velocity.y = -300;
-                }
+                    if (w.isDown && player.body.touching.down && hitPlatformP1) {
+                        player.body.velocity.y = -300;
+                    }
 
-                //player2 input
-                if (cursors.left.isDown) {
-                    player2.body.velocity.x = -200;
-                    player2.animations.play('left');
-                    isP2LookingLeft = 1;
-                }
-                else {
-                    if (cursors.right.isDown) {
-                        player2.body.velocity.x = 200;
-                        player2.animations.play('right');
-                        isP2LookingLeft = 0;
+                    //player2 input
+                    if (cursors.left.isDown) {
+                        player2.body.velocity.x = -200;
+                        player2.animations.play('left');
+                        isP2LookingLeft = 1;
                     }
                     else {
-                        if (isP2LookingLeft == 1) {
-                            player2.animations.play('standLeft');
+                        if (cursors.right.isDown) {
+                            player2.body.velocity.x = 200;
+                            player2.animations.play('right');
+                            isP2LookingLeft = 0;
                         }
                         else {
-                            player2.animations.play('standRight');
+                            if (isP2LookingLeft == 1) {
+                                player2.animations.play('standLeft');
+                            }
+                            else {
+                                player2.animations.play('standRight');
+                            }
                         }
                     }
-                }
-                if (cursors.up.isDown && player2.body.touching.down && hitPlatformP2) {
-                    player2.body.velocity.y = -300;
+                    if (cursors.up.isDown && player2.body.touching.down && hitPlatformP2) {
+                        player2.body.velocity.y = -300;
+                    }
                 }
 
+                else {
+                    endGameText = game.add.text(275, 325, 'Press space to restart!', { fontSize: '25px', fill: '#FFF' });
+                    if (spacebar.isDown) {
+                        scoreP1 = 0;
+                        scoreP2 = 0;
+                        create();
+                    }
+                }
 
                 //what happens when the enemy touches the player
                 //            game.physics.arcade.overlap(player, enemy, killplayer, null, this);
@@ -238,7 +248,10 @@
                 else {
                     scoreTextP1.text = 'TIE';
                     scoreTextP2.text = 'TIE';
-                } 
+                    player.kill();
+                    player2.kill();
+                }
+
                 timer.stop();
             }
         }
