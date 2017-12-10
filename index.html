@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -140,12 +140,10 @@
 
             }
             function update() {
-                var hitPlatform = game.physics.arcade.collide(player, platforms);
-                var hitPlatform = game.physics.arcade.collide(player2, platforms);
-                //var hitPlatform = game.physics.arcade.collide(enemy, platforms);
+                var hitPlatformP1 = game.physics.arcade.collide(player, platforms);
+                var hitPlatformP2 = game.physics.arcade.collide(player2, platforms);
                 player.body.velocity.x = 0;
                 player2.body.velocity.x = 0;
-                //enemy.body.velocity.x = 0;
                 bg.animations.play('twinkle');
 
                 //player input
@@ -170,7 +168,7 @@
                             }
                         }
                     }
-                    if (w.isDown && player.body.touching.down && hitPlatform) {
+                    if (w.isDown && player.body.touching.down && hitPlatformP1) {
                         player.body.velocity.y = -300;
                     }
 
@@ -195,7 +193,7 @@
                             }
                         }
                     }
-                    if (cursors.up.isDown && player2.body.touching.down && hitPlatform) {
+                    if (cursors.up.isDown && player2.body.touching.down && hitPlatformP2) {
                         player2.body.velocity.y = -300;
                     }
                 }
