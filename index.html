@@ -42,7 +42,9 @@
             // For timer
             var timer;
             var timerText = 0;
-            var timerInSeconds = 0;
+            
+            // Star timer
+            var starTimer; 
 
             function create() {
                 game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -69,14 +71,16 @@
                 timer = game.time.create(false);
                 timer.loop(30000, timerChecker, this);
                 timer.start();
+                
+                //spawning the stars
+                starTimer = game.time.create(false);
+                starTimer.loop(1000, spawnStar, this);
+                starTimer.start();
 
                 // Adding the stars to collect.
                 stars = game.add.group();
                 stars.enableBody = true;
                 stars.physicsBodyType = Phaser.Physics.ARCADE;
-
-                //spawning the stars
-                game.time.events.loop(1000, spawnStar, this);
 
                 // Adding players.
                 player = game.add.sprite(50, game.world.height - 900, 'player1');
@@ -243,6 +247,7 @@
                 }
 
                 timer.stop();
+                starTimer.stop();
             } // end of timeChecker() function.
         }
 
