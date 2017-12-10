@@ -21,9 +21,6 @@
                 game.load.spritesheet('player2', 'assets/player2.png', 28, 38);
             } // End of preload function.
             // Variable declaration
-            var ledge;
-            var ground;
-
             var scoreTextP1;
             var scoreTextP2;
 
@@ -48,6 +45,8 @@
 
             function create() {
                 game.physics.startSystem(Phaser.Physics.ARCADE);
+                var ledge;
+                var ground;
                 // For background.
                 bg = game.add.sprite(0, 0, 'bg');
                 bg.animations.add('twinkle', [0, 1, 2, 3, 4], 8, true);
@@ -246,7 +245,6 @@
                     player2.kill();
                 }
                 
-                ledge = null;
                 timer.stop();
                 starTimer.stop();
             } // end of timeChecker() function.
