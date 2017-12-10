@@ -137,8 +137,9 @@
                 player2.body.velocity.x = 0;
                 bg.animations.play('twinkle');
 
-                //player input
+                // What happens if both players are alive?
                 if (player.alive && player2.alive) {
+                    //player input
                     if (a.isDown) {
                         player.body.velocity.x = -200;
                         player.animations.play('left');
@@ -187,9 +188,9 @@
                     if (cursors.up.isDown && player2.body.touching.down && hitPlatformP2) {
                         player2.body.velocity.y = -300;
                     }
-                }
+                } // End of what happens when a player is alive.
 
-                // What happens if a player isn't alive?
+                // To introduce a restart condition when a player wins or loses.
                 else {
                     endGameText = game.add.text(275, 325, 'Press space to restart!', { fontSize: '25px', fill: '#FFF' });
                     if (spacebar.isDown) {
