@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -15,12 +15,13 @@
         var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
         function preload() {
             game.load.image('logo', 'phaser.png');
-            game.load.image('bg', 'assets/bg.png');
             game.load.image('platform', 'assets/platform.png');
+            game.load.image('ground', 'assets/ground.png');
             game.load.image('goal', 'assets/star.png');
             game.load.image('dia1', 'assets/diamond.png');
-            game.load.spritesheet('player1', 'assets/dude.png', 32, 48);
-            game.load.spritesheet('player2', 'assets/dude.png', 32, 48);
+            game.load.spritesheet('bg', 'assets/bg.png', 800, 600);
+            game.load.spritesheet('player1', 'assets/player1.png', 28, 38);
+            game.load.spritesheet('player2', 'assets/player2.png', 28, 38);
             game.load.spritesheet('bad1', 'assets/baddie.png', 32, 32);
         }
         	var ledge; 
@@ -31,18 +32,20 @@
                     
             var scoreP1 = 0;
             var scoreP2 = 0;
-        
+
+            var isP1LookingLeft = 0;
+            var isP2LookingLeft = 1;
+
         function create() {
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //adding background
-            game.add.sprite(0, 0, 'bg');
+            bg = game.add.sprite(0, 0, 'bg');
+            bg.animations.add('twinkle', [0, 1, 2, 3, 4], 10, true);
 
-            game.add.group();
             platforms = game.add.group();
             platforms.enableBody = true;
             
-            ground = platforms.create(0, game.world.height - 64, 'platform');
-            ground.scale.setTo(2, 2);
+            ground = platforms.create(0, game.world.height - 64, 'ground');
             ground.body.immovable = true;
             
             ledge = platforms.create(575, 400, 'platform');
@@ -57,7 +60,7 @@
             stars.enableBody = true;
                 
             //spawning the star
-            for (var i = 0; i<5; i++){
+            for (var i = 0; i < 5; i++){
                var star = stars.create(i * 150 + 100, 300, 'goal');
             }
             
@@ -81,11 +84,15 @@
             enemy.body.gravity.y = 300;
             enemy.body.collideWorldBounds = true;
             //player animation
-            player.animations.add('left', [0, 1, 2, 3], 10, true);
-            player.animations.add('right', [5, 6, 7, 8], 10, true);
+            player.animations.add('left', [2, 0, 1], 9, true);
+            player.animations.add('right', [3, 4, 5], 9, true);
+            player.animations.add('standLeft', [2], 1, true);
+            player.animations.add('standRight', [3], 1, true);
             //player2 animation
-            player2.animations.add('left', [0, 1, 2, 3], 10, true);
-            player2.animations.add('right', [5, 6, 7, 8], 10, true);
+            player2.animations.add('left', [2, 0, 1], 9, true);
+            player2.animations.add('right', [3, 4, 5], 9, true);
+            player2.animations.add('standLeft', [2], 1, true);
+            player2.animations.add('standRight', [3], 1, true);
 
             //enemy animation
             enemy.animations.add('left', [0, 1], 10, true);
@@ -100,8 +107,7 @@
             //adding score text at the top for player 1 and 2
             
             scoreTextP1 = game.add.text (20, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
-            scoreTextP2 = game.add.text (660, 20, 'Score: 0', { fontSize :'25px', fill: '#000' });
-            
+            scoreTextP2 = game.add.text(660, 20, 'Score: 0', { fontSize: '25px', fill: '#000' });
             
         }
         function update() {
@@ -111,20 +117,27 @@
             player.body.velocity.x = 0;
             player2.body.velocity.x = 0;
             enemy.body.velocity.x = 0;
+            bg.animations.play('twinkle');
 
             //player input
             if (a.isDown) {
                 player.body.velocity.x = -200;
                 player.animations.play('left');
+                isP1LookingLeft = 1;
             }
             else {
                 if (d.isDown) {
                     player.body.velocity.x = 200;
                     player.animations.play('right');
+                    isP1LookingLeft = 0;
                 }
                 else {
-                	player.frame = 4;
-                    //player.animations.stop();
+                    if (isP1LookingLeft == 1) {
+                        player.animations.play('standLeft');
+                    }
+                    else {
+                        player.animations.play('standRight');
+                    }
                 }
             }
             if (w.isDown && player.body.touching.down && hitPlatform) {
@@ -135,14 +148,21 @@
             if (cursors.left.isDown) {
                 player2.body.velocity.x = -200;
                 player2.animations.play('left');
+                isP2LookingLeft = 1;
             }
             else {
                 if (cursors.right.isDown) {
                     player2.body.velocity.x = 200;
                     player2.animations.play('right');
+                    isP2LookingLeft = 0;
                 }
                 else {
-                    player2.frame = 4;
+                    if (isP2LookingLeft == 1) {
+                        player2.animations.play('standLeft');
+                    }
+                    else {
+                        player2.animations.play('standRight');
+                    }
                 }
             }
             if (cursors.up.isDown && player2.body.touching.down && hitPlatform) {
