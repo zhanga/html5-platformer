@@ -9,6 +9,6 @@ Developed by Anthony Zhang, Kevin Chow, and Adrien Johnson
 * Project developed for a presentation.
 * Uses the **phaser.io** HTML5/Js game development framework.
 
-##To-do
+## To-do
 * Implement falling stars.
 * Title screen.
