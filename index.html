@@ -226,16 +226,16 @@
 
             function timerChecker() {
                 if (scoreP1 > scoreP2) {
-                    scoreTextP1.text = 'WINNER'
-                    scoreTextP2.text = 'LOSER'
+                    scoreTextP1.text = 'WINNER';
+                    scoreTextP2.text = 'LOSER';
                 }
-                else if (scoreP1 == scoreP2) {
-                    scoreTextP1 = 'TIE';
-                    scoreTextP2 = 'TIE';
+                else if (scoreP1 < scoreP2) {
+                    scoreTextP1.text = 'LOSER';
+                    scoreTextP2.text = 'WINNER';
                 }
                 else {
-                    scoreTextP1.text = 'LOSER'
-                    scoreTextP2.text = 'WINNER'
+                    scoreTextP1 = 'TIE';
+                    scoreTextP2 = 'TIE';
                 } 
 
                 player.kill();
