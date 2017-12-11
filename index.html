@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>HTML5 Platformer</title>
+    <title>Star Collector</title>
 
     <script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.min.js"></script>
 </head>
@@ -209,7 +209,7 @@
 
                 game.physics.arcade.overlap(player2, stars, collectP2, null, this);
 
-                timerText.text = timer.duration.toFixed(0) / 1000;
+                timerText.text = (timer.duration / 1000).toFixed(1);
 
                 function collectP1(player, stars) {
                     stars.kill();
